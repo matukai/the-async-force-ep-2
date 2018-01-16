@@ -76,5 +76,40 @@ function reqListener() {
         } // end getFilms
       }) // end forEach
     } // end planet
-  } // end else if
+  }else if(type.value === 'starships'){
+    let oReq3 = new XMLHttpRequest();
+    oReq3.addEventListener('load', starships);
+    oReq3.open('GET', 'https://swapi.co/api/starships/' + idNum);
+    oReq3.send();
+
+    function starships() {
+      let data = JSON.parse(this.response);
+      //console.log(data);
+      let name = document.createElement('h2');
+      document.body.appendChild(name);
+      name.innerHTML = data.name;
+      let manufacturer = document.createElement('p');
+      name.appendChild(manufacturer);
+      manufacturer.innerHTML = data.manufacturer;
+      let films = document.createElement('ul');
+      name.appendChild(films);
+      //console.log(data.films);
+
+      //for each loop through data.films
+      data.films.forEach(function (element, index, array){
+        //XHR request for films
+        let filmsRequest = new XMLHttpRequest();
+        filmsRequest.addEventListener('load', getFilms);
+        filmsRequest.open('GET', element);
+        filmsRequest.send();
+        function getFilms() {
+          let data = JSON.parse(this.response);
+          console.log(data);
+          let listFilms = document.createElement('li');
+          name.appendChild(listFilms);
+          listFilms.innerHTML = data.title;
+        } // end getFilms
+      }) // end for each
+    } // end starships
+  } //end else if
 } // end reqListener
