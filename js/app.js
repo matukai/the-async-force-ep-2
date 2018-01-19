@@ -1,14 +1,27 @@
 console.log('sanitycheck');
 
-let userInput = document.getElementById('resourceId');
-let idNum = null;
+
+//drop down menu type
 let type = document.getElementById('resourceType');
-let userButton = document.getElementById('requestResourceButton').addEventListener('click', reqListener);
+//event listener
+let userButton = document.getElementById('requestResourceButton').addEventListener('click', function() {
+  let userInput = document.getElementById('resourceId');
+  checkInput(userInput);
+})
 
-function reqListener() {
+function checkInput (userInput){
+  input = parseFloat(userInput.value);
+  console.log(input);
+  if(isNaN(input)){
+    alert('this is not a number you are looking for');
+  }else{
+    reqListener(input);
+  }
+}
 
-  idNum = parseFloat(userInput.value);
-  console.log(idNum);
+
+function reqListener(idNum) {
+
   if (type.value === 'people') {
     let oReq = new XMLHttpRequest();
     oReq.addEventListener('load', people);
